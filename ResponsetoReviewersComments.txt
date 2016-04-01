@@ -1,0 +1,149 @@
+-----------------------------------------------------------------------------------------
+Reviewer #1: 
+-----------------------------------------------------------------------------------------
+1. Is the subject of interest to the readership of Nuclear Science and 
+Engineering? Yes, work provides a useful technique for quickly approximating results for a specific calculation based on interpolation from a known library of results.  Method saves users several orders of magnitude of computation time. 
+
+2. Is this an original contribution? Yes, though several similar techniques exist in Reactor Core Analysis, using genetic algorithms to estimate attributes of an optimum solution, none of these techniques have been applied to detector design in reactor safeguards
+
+3. Are title and abstract adequate to the content of the paper?   Title is a bit misleading.  The author used radial Gaussian basis functions to interpolate, from a given library, the attributes of a given detector response.  Therefore title might read, "Using radial basis functions to interpolate spent fuel attributes from detector response".  The abstract needs a sentence stating that radial basis functions are used to interpolate attributes from a given detector response (see .pdf by going to http://nse.edmgr.com/l.asp?i=2981&l=10XODJFK)
+
+The focus of the paper is not on the radial basis functions, but on code emulation; the title was not changed.  However a sentence was added to the abstract that radial basis functions were used to perform the interpolation.
+
+4. Does it give adequate credit to earlier work in the field? The author requires more background of prior similar work.  The introduction gives significant background for the NGSI effort; however, radial basis functions have been used before in several fields for interpolation (only 1 reference is given for radial basis functions and the applied field is never mentioned).
+
+To the best of the authors knowledge, radial basis functions have not previously been used in Safeguards applications.  Radial basis functions have been extensively in many different fields.  Listing their applications and appropriate references is unsuitable for this paper.  An adequate reference to radial basis functions is provided.
+
+5. Is it correct and complete? A novel solution to a reasonable problem is presented.  Results of the technique are presented, and the conclusions from the results are supported by actual evidence.  Superfluous information that does not support the papers hypothesis or conclusion is presented.  The author should either show connection as to why this information is important, or omit information altogether.  Please see comments in attached .pdf for specific technical considerations
+
+The reviewer's comments in the attached pdf were addressed as necessary in the paper.
+
+6. Is it clearly presented?   Yes,  see .pdf file
+7. Should it be published: 
+a) As a technical paper?
+If the author addresses all comments and provides more background information then the paper should be published as a technical paper.  If not, publish as a technical note. 
+
+As mentioned above, there is no background information on using radial basis functions in Safeguards applications.  References to similar work have been provided.
+
+8. Do you recommend: 
+b) Publication after revision along the lines indicated? 
+Only Publish after all comments in .pdf have been addressed.  Referee is interested in seeing paper after comments have been addressed.
+
+Other comments from notes on pdf file.
+
+
+
+-----------------------------------------------------------------------------------------
+Reviewer #2: 
+-----------------------------------------------------------------------------------------
+General Comments
+--The high-level motivation for this work is clear, as is the potential utility of the method as a path to accelerating viability studies in the area of spent fuel assay. 
+
+--The use of a Monte-Carlo-based estimator also seems appropriate for this particular application.
+
+--Unfortunately, the descriptions of the various steps in the method are difficult to follow which makes it challenging for the reader (at least this reviewer) to appreciate or evaluate the results. Further, it is this reviewer's opinion that there is insufficient detail in the paper to support a number of the most important lines of reasoning (more detail and specific examples in the notes that follow) and assertions.
+
+--This manuscript needs significant revision prior to publication.
+
+
+
+Major Comments
+Expand and Clarify Description of Method
+If the reviewer understands correctly, there are several steps in the method:
+1) Define the detector response (DR) of a specific instrument to a specific assembly. This vector (or scalar) serves as the "unknown" and could be generated via simulation (as in this study) or measurement of an assembly of unknown attributes. This DR has an associated uncertainty (e.g. uncertainty on the singles, doubles and triples rates for a neutron coincidence type of measurement) which is comprised of both systematic uncertainty and statistical uncertainty. In the simulation-based method described in this manuscript, the systematic uncertainty in DR is assumed negligible, while the statistical uncertainty is taken to be 1% (Correct?). 
+
+Begin Loop
+2) Pull i_th random values of B,E,C from full or limited range, assuming a Normal distribution on the values of B, E and C.
+3) Calculate the Emulated DR, EDR_i, using RBFs as the interpolation tool for a training grid of assemblies.
+4) Calculate the "weighted attribute", P_i, for the unknown DR using a vectoral distance between DR and EDR_i as the weighting function. The vectoral distance calculation (Eqs 4) appear to make Gaussian assumptions). 
+End Loop
+
+5) Loop through steps 2) thru 4) N times, where N=1e5 in this study.
+
+6) Calculate P_mean and histogram N P_i values to support a calculation of sigma_P_mean 
+
+Reviewer strongly suggests that this process be summarized somewhere in the paper to assist the reader in understanding the steps and the key assumptions.
+
+An excellent suggestion.  The reviewer does understand correctly.  A summary has been added to the end of Section II.  In addition, Section II.B which describes the Monte Carlo approach has been expanded and clarified.
+
+Expand Validation/Testing Section
+The choice of RBFs for interpolation is described in a textbook, generalized fashion, but the accuracy of RBF-based interpolation in this application is not supported. The whole paper hinges on the veracity of the RBFs for the creation of EBR_i vectors, yet the only mention of validation for this process is a phrase about Future Work at the very end of the paper. There is anecdotal support for the accuracy of the RBF interpolation in the "Simple Check" section, but this exercise hints only that over a very narrow range of assembly parameters, the RBF interpolation is good enough that the mean and uncertainty of the attribute is similar to the values when that specific assembly is included in the "training" of the interpolater (via the mapping function). This "Simple Check" is an important validation step, and is essential to the paper, but should not be the only validation component of the paper. 
+
+Reviewer strongly suggests expanding the Simple Check section into a section on "Validation" or "Benchmarking" more generally. It should include comparison of EDRs to explicitly simulated DRs at various points in the B,E,C parameter space for one or two of the assay methods. Such comparisons will build confidence that the DR emulation approach is sound over the entire fuel parameter space being studied, and therefore the reader should have confidence that one or two "aggregate" validation checks (such as the Simple Check) are truly representative of the problem overall. Reviewer also suggests adding additional "Simple Checks" that cover a wider range of B,E,C. In the existing Simple check, only one B value that could produce a specific attribute value was removed from the data set. What happens when you remove all of the "nearby" assembly parameters that could produce an attribute of ~5535? 
+
+As suggested by the reviewer, a section titled "Validation" was added to the paper with several new simulations showing the applicability of the Monte Carlo based method.
+
+Reviewer also suggests including a validation example for the variables included in the C_i calculations. Mean microscopic cross-sections (e.g. sigma_fission) are calculated using tallied "global" (spatial and over all energies) quantities such as fission rate. Do those calculated cross-sections agree favorably with tabulated cross-sections? Perhaps this kind of example would need to be confined to the thermal energy region for simplicity? 
+
+The definition of the fissile content was removed from the paper since it was superfluous.
+
+
+Monte Carlo Integration Methods
+The discussion of MC integration methods should be expanded or at least augmented to include references to supporting journal articles or publications. The leap from Eq. 2 to Eq. 3 is not clear to this reviewer (though the reviewer is no expert in MC-based integration methods). Then, what are the reasons for choosing that specific formulation of w_k? Its form seems to imply a Gaussian-like assumption about the "distance" between EDR_i and DR. Is this true? Is there a connection to the RBF interpolation scheme here? What other weighting functions are possible? Would the results change? Is this an area of further inquiry?
+
+The section on Monte Carlo integration has been expanded and clarified.  Some of Monte Carlo equations and derivations are well known in the Monte Carlo community and have not been derived.  However, a reference has been provided where generic derivations have been shown.  The formulas used in the Monte Carlo integration have been updated and corrected.
+
+
+Interpretation of Attribute Uncertainty
+The MC-based method produces 2 quantities of interest: P_mean and Sigma_P_mean. The interpretation of the former is clear, but the latter is not sufficiently described in the paper. We see that Sigma increases when the B,E,C range increases, but why? What are the driving components of that uncertainty? Is it the assumed 1% statistical uncertainty in DR? How do the uncertainties in C_i contribute? How do the uncertainties in RBF fitting (e.g. over a sparse vs dense training grid) contribute? Does the choice of w_k contribute? Does N (1e5 in this paper) play a role?
+
+Showing that the mean of the attribute converges to the correct value is important and compelling, but it should be accompanied by a more thorough discussion of the corresponding uncertainty and various components of that uncertainty. If, for example, it is asserted that the uncertainty is dominated by the counting statistics (1%) in the DR, then the paper should show examples of how the attribute uncertainty changes with DR sigma_stat (e.g. at 0.1 and 10%) to support that assertion.
+
+Also, the attribute uncertainty for the Full sampling is often quite assymetric. This should be explained and some statement about the validity of the one-sided uncertainty metric used in this paper would be helpful.
+
+The reason for the asymmetry of the assembly attribute is addressed.
+
+At a higher level, the paper should address why estimating the uncertainty of an attribute from a single measurement is important to the NGSI evaluation study. It would also be helpful to provide some practical context for how such an uncertainty estimate might be used if this method were ever applied to a measured DR and EDRs were generated from a library of measured, instead of simulated, fuel assemblies. How would the IAEA use this uncertainty information? 
+
+A brief description of how this technique would be used was added.
+
+Results Section
+If the reviewer understand correctly, all of the results except for 3a were generated with the 45 GWd assemblies included in the training/calibration set. Since the veracity of the emulation process is one of the key technical questions in this work, it would be much preferred for all of the results to be based on a training set that does NOT include any of the assemblies with attribute values in the region around 5535. The value of an interpolation scheme cannot be evaluated very well when the interpolater is not asked to interpolate. As a backdrop to these results, the authors could simply state that the attribute uncertainties were similar when using all 64 fuel assemblies in the training set (which is close to what the authors have done with 3A and 2A). 
+
+
+
+Nomenclature and Variables
+Nomenclature appears inconsistent in many places. For example, it seems that Detector Response and Instrument Response are used interchangeably at times, but most readers will view these as very different things. For example, the pulse train from a He-3 array might be considered the DR, but the instrument response is how that data gets processed into S, D and T values, which can then be "mapped" to assembly parameters through calibration curves (e.g. the C_i). 
+
+The use of "measured" in this paper is also confusing since there are no measured values. Perhaps using "DR of unknown assembly" would be more clear, since this this DR could derive from either simulation (as it does here) or measurement (in the future?). "P'" for the mean of an attribute is confusing, when P could also be confused with the probability from the histograms and " ' " usually refers to the first derivative, not the mean.  
+
+An attempt has been made to make the nomenclature more understandable.  
+
+
+
+Minor Comments
+--RBFs are the only interpolation method mentioned in the paper. Did the authors try any other methods? If so, how did the end results differ? This information might help support the discussion of uncertainty components mentioned above.
+
+No other methods have been attempted at this time.  An explanation why radial basis functions were chose is in the paper/
+
+--Why are the distributions for B,E,C (when using the Limited approach) assumed to be Normal? Why not uniform? Presumably, the choice of the distribution is dictated by the uncertainty characteristics for the "independent measurement" of 45 +/- 2.25 GWd?
+
+The choice of Gaussian distribution was because it was intuitive.  The uncertainty of a detector response is related to counting statistics which are Gaussian in nature.
+
+--Example Instruments: Six different instruments are used as examples, but several of them might tell the same "story". Reviewer suggests that the number of instruments be reduced to those that tell different physics stories (e.g. have VERY different underlying physics for the DR).
+
+The intent of using multiple instruments was to show that the Monte Carlo-based technique is applicable across different instruments.  The end result of the NGSI effort introduced in the Introduction will use instruments with different physics.  Data from all these instruments is not yet available for use with the Monte Carlo-based technique defined in this paper.
+
+--The Fig. 8 results for DDSI under a limited "training/calibration" set are quite interesting. Why the two lobes in the Full case? Does this shed light on the assymetric results from the other Full cases? You might consider using this Figure as a separate storyline about the value of "parameter-space density and completeness" when creating the mapping functions used for EDRs. 
+
+Yes, the SINRD (not DDSI) results to help to illustrate the reason for the asymmetry of the results.  This has been addressed in the paper.
+
+--Typos in abstract (hyphens) and References (e.g. "Ngsi") and Intro ("pins has been")
+
+Thanks.  Corrected.
+
+--Might be preferable not to mention the "program" in the abstract--stick to the technical message there and leave the programmatic context to the Intro (where it is covered very well).
+
+--First paragraph of the Intro seems a bit alarmist. Would the IAEA agree that Pu mass quantification is of "great concern" when weighed against the simplicity of item-counting-based approaches? Is "malicious diversion" somehow different than diversion?
+
+Paragraph has been revised addressing concernts.
+
+--Is the wrong plot used in Fig. 3B? It appears to include the 45 GWD in the training set, though the text and caption indicate otherwise. 
+
+Plot has been fixed.
+
+--Results Figures: Highlight the marker for the reference assembly (if it continues to be included in the results); Remove the double marker labels in the Legend;
+
+--"Smudge" is probably not an appropriate term to used in a journal manuscript.
+
+The authors feel that "smudge", while a precise term, accurately describes the imprecise feature of the figure being described.

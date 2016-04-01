@@ -1,0 +1,53 @@
+\documentclass{ansnse}
+\usepackage{authblk}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{isotope}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{todonotes}
+\usepackage{subfig}
+\usepackage{booktabs}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,
+citecolor=black,
+linkcolor=black}
+
+\sisetup{list-final-separator={, and },
+separate-uncertainty=true,
+range-phrase={--},
+multi-part-units=single,
+list-units=single,
+range-units=single}
+
+\author{Jeremy Lloyd Conlin\footnote{\texttt{jlconlin@lanl.gov}} }  % PNAR, MC
+\author{Stephen J. Tobin}   % Overall effort
+\author{Adrienne M. LaFleur}    % SINRD
+\author{Jianwei Hu}         % CIPN
+\author{TaeHoon Lee}        % DDA
+\author{Nathan P. Sandoval} % DN
+\author{Melissa A. Schear}  % DDSI
+
+\affil{\normalsize\emph{Los Alamos National Laboratory,
+Los Alamos, NM 87544}}
+
+\title{On Using Code Emulators and Monte Carlo Estimation to Predict Assembly Attributes of Spent Fuel Assemblies for Safeguards Applications}
+
+\date{}
+
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+
+\newcommand{\PuEff}{\ensuremath{\isotope[239]{Pu}_{\text{e}}}}
+\newcommand{\Pub}{\ensuremath{\PuEff'}}
+\newcommand{\dd}{\ensuremath{\mathop{}\!\mathrm{d}}}
+\newcommand{\weight}{\ensuremath{\mathpzc{w}}}
+
+\begin{document}
+\ansabstract{The quantification of the plutonium mass in spent nuclear fuel assemblies is an important measurement for nuclear safeguards practitioners.  A program is well underway to develop nondestructive assay instruments which, when combined, will be able to quantify the plutonium content of a spent nuclear fuel assembly.  Each instrument will quantify a specific attribute of the spent fuel assembly e.g., the fissile content.  In this paper, we present a Monte Carlo-based method of estimating the mean and distribution of some assembly attributes.  An MCNPX model of each instrument has been created and the response of the instrument was simulated for a range of spent fuel assemblies with discrete parameters (e.g., burnup, initial enrichment, and cooling time).  The Monte Carlo-based method interpolates between the modeled results for an instrument to emulate a response for parameters not explicitly modeled.  We demonstrate the usefulness of this technique in applying the technique to six different instruments under investigation. The results show that this Monte Carlo-based method can be used to estimate the assembly attributes of a spent fuel assembly based upon the measured response from the instrument.
+}
+keywords: Monte Carlo, emulation, safeguards.
+\end{document}
+
